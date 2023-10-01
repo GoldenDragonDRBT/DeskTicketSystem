@@ -41,8 +41,8 @@
     "react/react-in-jsx-scope": "off",
     "no-unused-vars": "off",
     "react/jsx-key": "off",
-    "no-undef": "off"
-    // "react/prop-types": "off"
+    "no-undef": "off",
+    "react/prop-types": "off"
     // "react-hooks/exhaustive-deps": "off",
     // "react/display-name": "off"
     // "no-empty": "off" // For disabling "catch (error) {}"

@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import NewTicket from './pages/NewTicket';
+import Tickets from './pages/Tickets';
 
 function App() {
 
@@ -22,6 +23,9 @@ function App() {
             <Route path='/new-ticket' element={<PrivateRoute />} >
               <Route path='/new-ticket' element={<NewTicket />} />
               {/*This is the way to create a private route by wrapping in to "PrivateRoute" and then we put the actual element that we want to access and the url (new-ticket) will be the same for bout of this "Route" */}
+            </Route>
+            <Route path='/tickets' element={<PrivateRoute />} >
+              <Route path='/tickets' element={<Tickets />} />
             </Route>
           </Routes>
         </div>
