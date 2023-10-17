@@ -1,8 +1,8 @@
 const asyncHandler = require('express-async-handler');
 
-const User = require('../models/userModel.jsx');
-const Note = require('../models/noteModel.jsx');
-const Ticket = require('../models/ticketModel.jsx');
+const User = require('../models/userModel.js');
+const Note = require('../models/noteModel.js');
+const Ticket = require('../models/ticketModel.js');
 
 // Description: Get notes for a ticket
 // Route: GET /api/tickets/:ticketId/notes
@@ -51,7 +51,7 @@ const addNote = asyncHandler(async (req, res) => {
     text: req.body.text,
     isStaff: false,
     ticket: req.params.ticketId,
-    user: req.user.id
+    user: req.user.id,
   });
 
   res.status(200).json(note);

@@ -1,61 +1,60 @@
-const asyncHandler = require('express-async-handler')
-const bcrypt = require('bcryptjs') // "bcrypt" for hashing the password
-const jwt = require('jsonwebtoken')
+const asyncHandler = require('express-async-handler');
+const bcrypt = require('bcryptjs'); // "bcrypt" for hashing the password
+const jwt = require('jsonwebtoken');
 
-const User = require('../models/userModel.jsx')
+const User = require('../models/userModel.js');
 
 // Description: Register a new user
 // Route: /api/users
 // Access: Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body
+  const { name, email, password } = req.body;
 
   // Validation
   if (!name || !email || !password) {
-    res.status(400)
-    throw new Error('Please include all fields')
+    res.status(400);
+    throw new Error('Please include all fields');
   }
 
   // Find if user already exist
-  const userExists = await User.findOne({ email })
+  const userExists = await User.findOne({ email });
 
   if (userExists) {
-    res.status(400)
-    throw new Error('User already exist')
+    res.status(400);
+    throw new Error('User already exist');
   }
 
   // Hash password
-  const salt = await bcrypt.genSalt(10)
-  const hashedPassword = await bcrypt.hash(password, salt)
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
 
   // Create user
   const user = await User.create({
     name,
     email,
-    password: hashedPassword // Important to set the property to "hashedPassword" for encryption 
-  })
+    password: hashedPassword, // Important to set the property to "hashedPassword" for encryption
+  });
 
   if (user) {
     res.status(201).json({
       _id: user._id, // We using underscore id (_id) because thats how mongoDB stores theres id's
       name: user.name,
       email: user.email,
-      token: generateToken(user._id)
-    })
+      token: generateToken(user._id),
+    });
   } else {
-    res.status(400)
-    throw new error('Invalid user data')
+    res.status(400);
+    throw new error('Invalid user data');
   }
-
-})
+});
 
 // Description: Login a user
 // Route: /api/users/login
 // Access: Public
 const loginUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body
+  const { email, password } = req.body;
 
-  const user = await User.findOne({ email })
+  const user = await User.findOne({ email });
 
   // Check user and password match
   if (user && (await bcrypt.compare(password, user.password))) {
@@ -63,15 +62,15 @@ const loginUser = asyncHandler(async (req, res) => {
       _id: user._id, // We using underscore id (_id) because thats how mongoDB stores theres id's
       name: user.name,
       email: user.email,
-      token: generateToken(user._id)
-    })
+      token: generateToken(user._id),
+    });
   } else {
-    res.status(401)
-    throw new Error('Invalid credentials')
+    res.status(401);
+    throw new Error('Invalid credentials');
   }
 
   // res.send('Login Route')
-})
+});
 
 // Description: Get current user
 // Route: /api/users/me
@@ -82,19 +81,19 @@ const getMe = asyncHandler(async (req, res) => {
     id: req.user._id,
     email: req.user.email,
     name: req.user.name,
-  }
-  res.status(200).json(user)
-})
+  };
+  res.status(200).json(user);
+});
 
 // Generate token
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: '30d' // In 30 days
-  })
-}
+    expiresIn: '30d', // In 30 days
+  });
+};
 
 module.exports = {
   registerUser,
   loginUser,
   getMe,
-}
+};
