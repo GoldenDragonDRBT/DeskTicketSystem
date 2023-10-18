@@ -3,13 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
+    "build": "npm i && cd frontend && npm i & npm run build",
     "start": "node backend/server.js",
-    "server": "nodemon backend/server.js",
-    "client": "npm start --prefix frontend"
+    "server": "nodemon backend/server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -18,20 +14,9 @@
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^7.5.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "mongoose": "^7.5.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.15",
-    "@types/react-dom": "^18.2.7",
-    "@vitejs/plugin-react": "^4.0.3",
-    "eslint": "^8.48.0",
-    "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.3",
-    "nodemon": "^3.0.1",
-    "vite": "^4.4.5",
-    "vite-plugin-eslint": "^1.8.1"
+    "nodemon": "^3.0.1"
   }
 }
