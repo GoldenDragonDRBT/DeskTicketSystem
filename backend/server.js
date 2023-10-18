@@ -26,13 +26,13 @@ app.use('/api/tickets', require('./routes/ticketRoutes.js'));
 // Serve Frontend
 if (process.env.NODE_ENV === 'production') {
   // Set build folder as static
-  app.use(express.static(path.join(__dirname, '../frontend/build'))); // Here setting static folder to the frontend build folder, then we loading the "index.html" file thats in that build folder.
+  app.use(express.static(path.join(__dirname, '../frontend/dist'))); // Here setting static folder to the frontend build folder, then we loading the "index.html" file thats in that build folder.
 
-  app.get('*', (_, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
-  }); // ".sendFile()" to send "index.html" file that gon be in the build folder of our React project.
+  app.get('*', (req, res) =>
+    res.sendFile(__dirname, '../', 'frontend', 'dist', 'index.html')
+  ); // ".sendFile()" to send "index.html" file that gon be in the build folder of our React project.
 } else {
-  app.get('/', (_, res) => {
+  app.get('/', (req, res) => {
     res.status(200).json({ message: 'Welcome to the Support Desk API' });
   });
 }
